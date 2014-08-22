@@ -13,37 +13,37 @@ _version 0.6.4 (July 14, 2014)_
 6. Ensure that the storyboard file's build action is set to InterfaceDefinition, and that the image files are set as bundle resources.
 7. Add the InitializeLookback() function below to your project to enable within your application, or roll your own:
 
-	private void InitializeLookback ()
-		try {
-			LookbackSDK.Lookback.SetupWithAppToken("<your Lookback token>");
-			LookbackSDK.Lookback lb = LookbackSDK.Lookback.lookback;
-			lb.ShakeToRecord = true;
-			lb.UserIdentifier = "<user's identifier>";
+			private void InitializeLookback ()
+				try {
+					LookbackSDK.Lookback.SetupWithAppToken("<your Lookback token>");
+					LookbackSDK.Lookback lb = LookbackSDK.Lookback.lookback;
+					lb.ShakeToRecord = true;
+					lb.UserIdentifier = "<user's identifier>";
 
-			//note: you can change these defaults to meet your needs.
-			NSUserDefaults.StandardUserDefaults.SetBool (true, "com.thirdcog.lookback.preview.enabled");
-			NSUserDefaults.StandardUserDefaults.SetBool (true, "com.thirdcog.lookback.autosplit");
-
-			//this delegate returns a url for the Lookback session.
-			NSNotificationCenter.DefaultCenter.AddObserver ("com.thirdcog.lookback.notification.startedUploading", delegate (NSNotification n) 
-			{
-				NSUrl url =		(NSUrl)n.UserInfo.ObjectForKey("com.thirdcog.lookback.notification.startedUploading.destinationURL".ToNSString());
-				UIPasteboard.General.Url = url;});}
-
-	catch { 
-		Console.WriteLine ("Unable to initialize Lookback.");
-			}
+					//note: you can change these defaults to meet your needs.
+					NSUserDefaults.StandardUserDefaults.SetBool (true, "com.thirdcog.lookback.preview.enabled");
+					NSUserDefaults.StandardUserDefaults.SetBool (true, "com.thirdcog.lookback.autosplit");
+		
+					//this delegate returns a url for the Lookback session.
+					NSNotificationCenter.DefaultCenter.AddObserver ("com.thirdcog.lookback.notification.startedUploading", delegate (NSNotification n) 
+					{
+						NSUrl url =		(NSUrl)n.UserInfo.ObjectForKey("com.thirdcog.lookback.notification.startedUploading.destinationURL".ToNSString());
+						UIPasteboard.General.Url = url;});}
+		
+			catch { 
+				Console.WriteLine ("Unable to initialize Lookback.");
+					}
+				}
 		}
-}
-
-	//Extension method to support Lookback initialization.
-	public static class ExtensionMethods
-	{
-		public static NSString ToNSString(this String str)
+		
+			//Extension method to support Lookback initialization.
+			public static class ExtensionMethods
 			{
-				return new NSString(str);
+				public static NSString ToNSString(this String str)
+					{
+						return new NSString(str);
+					}
 			}
-	}
 
 ## Building the LookbackSample application
 1. follow steps 1-3 listed above.
